@@ -1,3 +1,18 @@
-<p>
-  block works!
-</p>
+<div class="card" style="width: 20rem;">
+  <div class="card-header">
+    Block #1
+  </div>
+  <table class="table table-bordered mb-0">
+    <tbody>
+      <tr *ngFor="let transaction of transactions; let i = index">
+        <th scope="row">{{i}}</th>
+        <td>
+          <app-transaction [transaction]="transaction" [index]="i"></app-transaction>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card-footer">
+    Footer
+  </div>
+</div>
