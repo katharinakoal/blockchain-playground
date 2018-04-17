@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SHA256 } from 'crypto-js';
 import MerkleTools from '@settlemint/merkle-tools';
-
 
 @Component({
   selector: 'app-root',
@@ -13,14 +11,9 @@ export class AppComponent implements OnInit {
 
   mroot: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
-    console.log('hash x', SHA256('x').toString());
-    console.log('hash y', SHA256('y').toString());
-    console.log('hash z', SHA256('z').toString());
-
     const merkleTools = new MerkleTools(); // no options, defaults to sha-256 hash type
 
     merkleTools.addLeaves(['x', 'y', 'z'], true); // we must indicate these values need to be hashed
@@ -36,7 +29,5 @@ export class AppComponent implements OnInit {
     console.log(proof0);
 
     merkleTools.resetTree(); // use this when done with this tree and you intend on creating a new one
-
   }
-
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Transaction } from './transaction';
-import { WordArray } from 'crypto-js';
 
 @Component({
   selector: 'app-transaction',
@@ -10,7 +9,7 @@ import { WordArray } from 'crypto-js';
 export class TransactionComponent implements OnInit {
   @Input() transaction: Transaction;
   @Input() index: number;
-  @Output() hashChange = new EventEmitter<WordArray>();
+  @Output() hashChange = new EventEmitter<string>();
 
   public hash: string;
   constructor() {}
@@ -20,8 +19,7 @@ export class TransactionComponent implements OnInit {
   }
 
   public updateTransactionHash(): void {
-    const hashObject = this.transaction.calculateTransactionHash(this.index.toString());
-    this.hash = hashObject.toString();
-    this.hashChange.emit(hashObject);
+    this.hash = this.transaction.calculateTransactionHash(this.index.toString());
+    this.hashChange.emit(this.hash);
   }
 }

@@ -11,9 +11,9 @@ export class BlockComponent implements OnInit {
 
   constructor() {
     this.transactions = new Array<Transaction>(
-      new Transaction('a'),
-      new Transaction('b'),
-      new Transaction('c')
+      new Transaction(),
+      new Transaction(),
+      new Transaction()
     );
   }
 
