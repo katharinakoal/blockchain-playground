@@ -21,7 +21,7 @@ export class Block {
   constructor(transactions?: Transaction[]) {
     this.transactions = new Array<Transaction>();
     this.creationDate = new Date();
-    this.previousBlockHash = '';
+    this.previousBlockHash = Settings.rootBlockHash;
     if (transactions) {
       this.transactions.push(...transactions);
     }
@@ -36,11 +36,12 @@ export class Block {
       this.previousBlockHash = previousBlock.blockHash;
       previousBlock.nextBlock = this;
     }
-    this._blockHash = this.calculateBlockHash();
+    this.calculateBlockHash();
   }
 
-  public calculateBlockHash(): string {
-    return crypto
+  public calculateBlockHash(): void {
+      console.log('now');
+    this._blockHash = crypto
       .createHash(Settings.hashAlgorithm)
       .update(this.calculateMerkleRootHash())
       .update(this.previousBlockHash)

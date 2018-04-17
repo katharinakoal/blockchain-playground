@@ -2,17 +2,29 @@
   <div class="card-header">
     Block #1
   </div>
-  <table class="table table-bordered mb-0">
-    <tbody>
-      <tr *ngFor="let transaction of block.transactions; let i = index">
-        <th scope="row">{{i}}</th>
-        <td>
-          <app-transaction [transaction]="transaction" [index]="i"></app-transaction>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="card-footer">
-    Footer
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr *ngFor="let transaction of block.transactions; let i = index">
+          <th scope="row" style="width: 4rem">{{i}}</th>
+          <td>
+            <app-transaction [transaction]="transaction" [index]="i" (hashChange)="block.calculateBlockHash()"></app-transaction>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text" style="width: 4rem">Prev</div>
+      </div>
+      <input type="text" readonly [value]="block.previousBlockHash" class="form-control">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text" style="width: 4rem">Hash</div>
+      </div>
+      <input type="text" readonly [value]="block.blockHash" class="form-control">
+    </div>
   </div>
 </div>
