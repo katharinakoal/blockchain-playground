@@ -3,14 +3,14 @@ import * as crypto from 'crypto';
 export class Transaction {
   constructor(public data: string = '') {
     if (!data) {
-      this.data = crypto.randomBytes(4).toString('hex');
+      this.data = `TXN ${crypto.randomBytes(4).toString('hex')}`;
     }
   }
 
-  public calculateTransactionHash(nonce: string): string {
+  public calculateTransactionHash(): string {
     return crypto
       .createHash(Settings.hashAlgorithm)
-      .update(this.data + nonce)
+      .update(this.data)
       .digest('hex');
   }
 }

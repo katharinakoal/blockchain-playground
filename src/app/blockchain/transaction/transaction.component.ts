@@ -19,7 +19,7 @@ export class TransactionComponent implements OnInit {
   }
 
   public updateTransactionHash(): void {
-    this.hash = this.transaction.calculateTransactionHash(this.index.toString());
+    this.hash = this.transaction.calculateTransactionHash();
     this.hashChange.emit(this.hash);
   }
 }

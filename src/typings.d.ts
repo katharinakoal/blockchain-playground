@@ -3,4 +3,4 @@ declare var module: NodeModule;
 interface NodeModule {
   id: string;
 }
-declare module 'merkle-tools';
+declare module 'crypto';

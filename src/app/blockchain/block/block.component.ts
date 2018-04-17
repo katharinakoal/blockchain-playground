@@ -10,11 +10,7 @@ export class BlockComponent implements OnInit {
   public transactions: Array<Transaction>;
 
   constructor() {
-    this.transactions = new Array<Transaction>(
-      new Transaction(),
-      new Transaction(),
-      new Transaction()
-    );
+    this.transactions = Array.apply(null, { length: 4 }).map(_ => new Transaction());
   }
 
   ngOnInit() {}

@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule],
+  imports: [CommonModule, RouterModule.forChild(routes), FormsModule, NgbModule],
   declarations: [TransactionComponent, BlockComponent, ChainComponent, BlockchainComponent]
 })
 export class BlockchainModule {}
