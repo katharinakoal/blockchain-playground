@@ -11,6 +11,8 @@ import { Chain } from './chain/chain';
   styleUrls: ['./blockchain.component.scss']
 })
 export class BlockchainComponent implements OnInit {
+  public testblock: Block;
+
   constructor() {
     this.populateTestChain();
   }
@@ -23,15 +25,15 @@ export class BlockchainComponent implements OnInit {
       Array.apply(null, { length: 4 }).map(_ => new Transaction())
     );
 
-    const block = new Block();
-    block.addTransactions(
+    this.testblock = new Block();
+    this.testblock.addTransactions(
       transactionPool.getTransaction(),
       transactionPool.getTransaction(),
       transactionPool.getTransaction(),
       transactionPool.getTransaction()
     );
-    block.chainWith(null);
+    this.testblock.chainWith(null);
 
-    console.log(block);
+    console.log(this.testblock);
   }
 }

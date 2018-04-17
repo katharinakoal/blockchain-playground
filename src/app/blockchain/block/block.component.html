@@ -4,7 +4,7 @@
   </div>
   <table class="table table-bordered mb-0">
     <tbody>
-      <tr *ngFor="let transaction of transactions; let i = index">
+      <tr *ngFor="let transaction of block.transactions; let i = index">
         <th scope="row">{{i}}</th>
         <td>
           <app-transaction [transaction]="transaction" [index]="i"></app-transaction>

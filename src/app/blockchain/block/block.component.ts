@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Transaction } from '../transaction/transaction';
+import { Block } from './block';
 
 @Component({
   selector: 'app-block',
@@ -7,11 +8,9 @@ import { Transaction } from '../transaction/transaction';
   styleUrls: ['./block.component.scss']
 })
 export class BlockComponent implements OnInit {
-  public transactions: Array<Transaction>;
+  @Input() block: Block;
 
-  constructor() {
-    this.transactions = Array.apply(null, { length: 4 }).map(_ => new Transaction());
-  }
+  constructor() {}
 
   ngOnInit() {}
 }
