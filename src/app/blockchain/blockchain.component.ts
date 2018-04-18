@@ -11,9 +11,10 @@ import { Chain } from './chain/chain';
   styleUrls: ['./blockchain.component.scss']
 })
 export class BlockchainComponent implements OnInit {
-  public testblock: Block;
+  public blockchain: Chain;
 
   constructor() {
+    this.blockchain = new Chain();
     this.populateTestChain();
   }
 
@@ -22,18 +23,13 @@ export class BlockchainComponent implements OnInit {
   private populateTestChain(): void {
     // Build some sample transactions and populate pool
     const transactionPool = new TransactionPool<Transaction>(
-      Array.apply(null, { length: 4 }).map(_ => new Transaction())
+      Array.apply(null, { length: 16 }).map(_ => new Transaction())
     );
 
-    this.testblock = new Block();
-    this.testblock.addTransactions(
-      transactionPool.getTransaction(),
-      transactionPool.getTransaction(),
-      transactionPool.getTransaction(),
-      transactionPool.getTransaction()
-    );
-    this.testblock.chainWith(null);
-
-    console.log(this.testblock);
+    while (transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
+      const newBlock = new Block(transactionPool.getTransactions(Settings.transactionsPerBlock));
+      newBlock.chainWith(null);
+      this.blockchain.blocks.push(newBlock);
+    }
   }
 }

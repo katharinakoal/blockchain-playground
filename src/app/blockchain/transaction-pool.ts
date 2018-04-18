@@ -16,7 +16,11 @@ export class TransactionPool<T> {
     return this.hasTransactions ? this.queue.shift() : null;
   }
 
-  public hasTransactions(): boolean {
-    return Array.isArray(this.queue) && !!this.queue.length;
+  public getTransactions(quantity: number): T[] {
+    return this.hasTransactions(quantity) ? this.queue.splice(0, quantity) : null;
+  }
+
+  public hasTransactions(quantity: number = 1): boolean {
+    return Array.isArray(this.queue) && this.queue.length >= quantity;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Block } from '../block/block';
+import { Chain } from './chain';
 
 @Component({
   selector: 'app-chain',
@@ -7,7 +7,7 @@ import { Block } from '../block/block';
   styleUrls: ['./chain.component.scss']
 })
 export class ChainComponent implements OnInit {
-  @Input() block: Block;
+  @Input() chain: Chain;
 
   constructor() {}
 

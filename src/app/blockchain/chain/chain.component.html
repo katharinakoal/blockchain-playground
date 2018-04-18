@@ -1,3 +1,3 @@
 <div class="row">
-    <app-block [block]="block" class="col-sm-9 col-md-6 col-lg-4 col-xl-3"></app-block>
+    <app-block *ngFor="let block of chain?.blocks" [block]="block" class="col-sm-9 col-md-6 col-lg-4 col-xl-3"></app-block>
 </div>

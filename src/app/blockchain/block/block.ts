@@ -40,7 +40,6 @@ export class Block {
   }
 
   public calculateBlockHash(): void {
-      console.log('now');
     this._blockHash = crypto
       .createHash(Settings.hashAlgorithm)
       .update(this.calculateMerkleRootHash())

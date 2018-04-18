@@ -21,6 +21,8 @@ export class TransactionComponent implements OnInit {
   public updateTransactionHash(): void {
     const dirty = !!this.hash;
     this.hash = this.transaction.calculateTransactionHash();
-    if (dirty) this.hashChange.emit(this.hash);
+    if (dirty) {
+      this.hashChange.emit(this.hash);
+    }
   }
 }
