@@ -5,6 +5,7 @@ import * as crypto from 'crypto';
 
 export class Block {
   private _blockHash: string;
+  private _isValid: boolean;
 
   public transactions: Transaction[];
   public readonly creationDate: Date;
@@ -16,6 +17,9 @@ export class Block {
 
   public get blockHash(): string {
     return this._blockHash;
+  }
+  public get isValid(): boolean {
+    return this._isValid;
   }
 
   constructor(transactions?: Transaction[]) {
@@ -36,14 +40,22 @@ export class Block {
       this.previousBlockHash = previousBlock.blockHash;
       previousBlock.nextBlock = this;
     }
-    this.calculateBlockHash();
+    this.setBlockHash();
+    this._isValid = true;
   }
 
-  public calculateBlockHash(): void {
-    this._blockHash = crypto
+  public setBlockHash(): void {
+    this._blockHash = this.calculateBlockHash(this.previousBlockHash);
+  }
+
+  public calculateBlockHash(referenceBlockHash: string): string {
+    const referenceBlockHashToCalculate = referenceBlockHash
+      ? referenceBlockHash
+      : this.previousBlockHash;
+    return crypto
       .createHash(Settings.hashAlgorithm)
       .update(this.calculateMerkleRootHash())
-      .update(this.previousBlockHash)
+      .update(referenceBlockHashToCalculate)
       .update(this.creationDate.toDateString())
       .digest('hex');
   }
@@ -57,5 +69,21 @@ export class Block {
     const merkleRoot = merkleTools.getMerkleRoot().toString('hex');
     merkleTools.resetTree();
     return merkleRoot;
+  }
+
+  public checkValidity(previousBlockHashToCheck?: string): boolean {
+    const blockHashToCheck = this.calculateBlockHash(previousBlockHashToCheck);
+
+    this._isValid = this._blockHash === blockHashToCheck;
+
+    if (previousBlockHashToCheck) {
+      this.previousBlockHash = previousBlockHashToCheck;
+    }
+
+    if (this.nextBlock) {
+      return this.nextBlock.checkValidity(blockHashToCheck);
+    }
+
+    return this._isValid;
   }
 }

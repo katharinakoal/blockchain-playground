@@ -1,7 +1,20 @@
 import { Block } from '../block/block';
 export class Chain {
-  public blocks: Block[];
+  private genesisBlock: Block;
+  private currentBlock: Block;
+  private _blocks: Block[];
+  public get blocks(): Block[] {
+    return this._blocks;
+  }
   constructor() {
-    this.blocks = new Array<Block>();
+    this._blocks = new Array<Block>();
+  }
+  public acceptBlock(block: Block): void {
+    if (!this.genesisBlock) {
+      this.genesisBlock = block;
+    }
+    block.chainWith(this.currentBlock);
+    this.currentBlock = block;
+    this._blocks.push(block);
   }
 }

@@ -27,9 +27,9 @@ export class BlockchainComponent implements OnInit {
     );
 
     while (transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
-      const newBlock = new Block(transactionPool.getTransactions(Settings.transactionsPerBlock));
-      newBlock.chainWith(null);
-      this.blockchain.blocks.push(newBlock);
+      this.blockchain.acceptBlock(
+        new Block(transactionPool.getTransactions(Settings.transactionsPerBlock))
+      );
     }
   }
 }
