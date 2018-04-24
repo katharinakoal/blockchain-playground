@@ -6,13 +6,12 @@ import * as crypto from 'crypto';
 export class Block {
   private _blockHash: string;
   private _isValid: boolean;
+  private _nonce: number;
 
   public transactions: Transaction[];
   public readonly creationDate: Date;
   public previousBlockHash: string;
   public readonly signature: string;
-  public readonly nonce: number;
-
   public nextBlock: Block;
 
   public get blockHash(): string {
@@ -20,6 +19,9 @@ export class Block {
   }
   public get isValid(): boolean {
     return this._isValid;
+  }
+  public get nonce(): number {
+    return this._nonce;
   }
 
   constructor(transactions?: Transaction[]) {
@@ -40,15 +42,11 @@ export class Block {
       this.previousBlockHash = previousBlock.blockHash;
       previousBlock.nextBlock = this;
     }
-    this.setBlockHash();
+    this._blockHash = this.mine();
     this._isValid = true;
   }
 
-  public setBlockHash(): void {
-    this._blockHash = this.calculateBlockHash(this.previousBlockHash);
-  }
-
-  public calculateBlockHash(referenceBlockHash: string): string {
+  public calculateBlockHash(referenceBlockHash?: string): string {
     const referenceBlockHashToCalculate = referenceBlockHash
       ? referenceBlockHash
       : this.previousBlockHash;
@@ -57,6 +55,7 @@ export class Block {
       .update(this.calculateMerkleRootHash())
       .update(referenceBlockHashToCalculate)
       .update(this.creationDate.toDateString())
+      .update(this._nonce.toString())
       .digest('hex');
   }
 
@@ -69,6 +68,17 @@ export class Block {
     const merkleRoot = merkleTools.getMerkleRoot().toString('hex');
     merkleTools.resetTree();
     return merkleRoot;
+  }
+
+  private mine(): string {
+    this._nonce = -1;
+    let minedHash = '';
+    const searchPattern = Settings.difficultyPattern();
+    do {
+      this._nonce++;
+      minedHash = this.calculateBlockHash();
+    } while (!(this._nonce > Settings.maximumNonce || minedHash.startsWith(searchPattern)));
+    return minedHash;
   }
 
   public checkValidity(previousBlockHashToCheck?: string): boolean {

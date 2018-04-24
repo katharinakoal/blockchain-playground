@@ -12,24 +12,30 @@ import { Chain } from './chain/chain';
 })
 export class BlockchainComponent implements OnInit {
   public blockchain: Chain;
+  private transactionPool: TransactionPool<Transaction>;
 
   constructor() {
     this.blockchain = new Chain();
+    // Build some sample transactions and populate pool
+    this.transactionPool = new TransactionPool<Transaction>(
+      Array.apply(null, { length: 20 }).map(_ => new Transaction())
+    );
+  }
+
+  ngOnInit() {
     this.populateTestChain();
   }
 
-  ngOnInit() {}
+  public addBlock() {
+    this.populateTestChain();
+  }
 
   private populateTestChain(): void {
-    // Build some sample transactions and populate pool
-    const transactionPool = new TransactionPool<Transaction>(
-      Array.apply(null, { length: 16 }).map(_ => new Transaction())
-    );
-
-    while (transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
+    if (this.transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
       this.blockchain.acceptBlock(
-        new Block(transactionPool.getTransactions(Settings.transactionsPerBlock))
+        new Block(this.transactionPool.getTransactions(Settings.transactionsPerBlock))
       );
+      console.log('new block mined');
     }
   }
 }

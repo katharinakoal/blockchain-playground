@@ -1,6 +1,7 @@
 <div class="card" [ngClass]="{'text-white bg-danger' : !block.isValid}">
   <div class="card-header">
-    Block #1
+    Block
+    <span class="badge badge-pill badge-primary">{{block?.nonce}}</span>
   </div>
   <div class="card-body">
     <table class="table table-bordered">
