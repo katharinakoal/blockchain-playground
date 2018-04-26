@@ -1,4 +1,4 @@
-# BlockchainPlayground
+# BlockchainPlayground [![Build Status](https://travis-ci.com/katharinakoal/blockchain-playground.svg?token=Wm6Z5bubkpRWDsyrmUQ8&branch=master)](https://travis-ci.com/katharinakoal/blockchain-playground)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
