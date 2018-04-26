@@ -18,7 +18,7 @@ export class BlockchainComponent implements OnInit {
     this.blockchain = new Chain();
     // Build some sample transactions and populate pool
     this.transactionPool = new TransactionPool<Transaction>(
-      Array.apply(null, { length: 20 }).map(_ => new Transaction())
+      Array.apply(null, { length: 16 }).map(_ => new Transaction())
     );
   }
 
@@ -27,15 +27,16 @@ export class BlockchainComponent implements OnInit {
   }
 
   public addBlock() {
+    console.log('Mining started');
     this.populateTestChain();
+    console.log('Mining complete');
   }
 
   private populateTestChain(): void {
-    if (this.transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
+    while (this.transactionPool.hasTransactions(Settings.transactionsPerBlock)) {
       this.blockchain.acceptBlock(
         new Block(this.transactionPool.getTransactions(Settings.transactionsPerBlock))
       );
-      console.log('new block mined');
     }
   }
 }
