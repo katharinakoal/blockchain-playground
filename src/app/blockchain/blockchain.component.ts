@@ -18,7 +18,7 @@ export class BlockchainComponent implements OnInit {
     this.blockchain = new Chain();
     // Build some sample transactions and populate pool
     this.transactionPool = new TransactionPool<Transaction>(
-      Array.apply(null, { length: 12 }).map(_ => new Transaction())
+      Array.apply(null, { length: 16 }).map(_ => new Transaction())
     );
   }
 
