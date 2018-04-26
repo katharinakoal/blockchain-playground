@@ -1,5 +1,5 @@
 import { Settings } from '../blockchain.settings';
-import * as crypto from 'crypto';
+import * as crypto from 'crypto-browserify';
 export class Transaction {
   constructor(public data: string = '') {
     if (!data) {

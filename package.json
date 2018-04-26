@@ -25,6 +25,7 @@
     "@settlemint/merkle-tools": "^1.0.3",
     "bootstrap": "^4.1.0",
     "core-js": "^2.4.1",
+    "crypto-browserify": "^3.12.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

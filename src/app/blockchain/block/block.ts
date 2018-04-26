@@ -1,7 +1,7 @@
 import MerkleTools from '@settlemint/merkle-tools';
 import { Transaction } from '../transaction/transaction';
 import { Settings } from '../blockchain.settings';
-import * as crypto from 'crypto';
+import * as crypto from 'crypto-browserify';
 
 export class Block {
   private _blockHash: string;
